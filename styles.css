@@ -1,0 +1,875 @@
+/* ========================================
+   CSS Variables - Next.js Triadic Theme
+   ======================================== */
+:root {
+    /* Triadic Color Scheme */
+    --primary-cyan: #00D9FF;
+    --primary-magenta: #FF0080;
+    --primary-gold: #FFD700;
+    
+    /* Darker variants */
+    --cyan-dark: #00a8c7;
+    --magenta-dark: #cc0066;
+    --gold-dark: #b8860b;
+    
+    /* Lighter/Glow variants */
+    --cyan-glow: rgba(0, 217, 255, 0.3);
+    --magenta-glow: rgba(255, 0, 128, 0.3);
+    --gold-glow: rgba(255, 215, 0, 0.3);
+    
+    /* Background colors */
+    --bg-primary: #0a0a0a;
+    --bg-secondary: #111111;
+    --bg-card: #151515;
+    --bg-card-hover: #1a1a1a;
+    
+    /* Border colors */
+    --border-primary: #2a2a2a;
+    --border-hover: #3a3a3a;
+    
+    /* Text colors */
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0a0;
+    --text-muted: #666666;
+    
+    /* Gradients */
+    --gradient-triadic: linear-gradient(135deg, var(--primary-cyan), var(--primary-magenta), var(--primary-gold));
+    --gradient-cyan-magenta: linear-gradient(135deg, var(--primary-cyan), var(--primary-magenta));
+    --gradient-card: linear-gradient(145deg, rgba(21, 21, 21, 0.9), rgba(10, 10, 10, 0.9));
+    
+    /* Spacing */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 0.75rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    
+    /* Border radius */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+    --radius-full: 9999px;
+    
+    /* Transitions */
+    --transition-fast: 0.15s ease;
+    --transition-normal: 0.3s ease;
+    --transition-slow: 0.5s ease;
+    
+    /* Shadows */
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+    --shadow-glow-cyan: 0 0 20px var(--cyan-glow);
+    --shadow-glow-magenta: 0 0 20px var(--magenta-glow);
+}
+
+/* ========================================
+   Reset & Base Styles
+   ======================================== */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* ========================================
+   Background Effects
+   ======================================== */
+.bg-gradient {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(ellipse at 20% 20%, var(--cyan-glow) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, var(--magenta-glow) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, var(--gold-glow) 0%, transparent 60%);
+    opacity: 0.4;
+    pointer-events: none;
+    z-index: 0;
+    animation: gradientPulse 10s ease-in-out infinite;
+}
+
+@keyframes gradientPulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.5; }
+}
+
+.bg-grid {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.bg-noise {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    opacity: 0.03;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* ========================================
+   Container & Layout
+   ======================================== */
+.container {
+    position: relative;
+    z-index: 1;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: var(--spacing-xl);
+    min-height: 100vh;
+}
+
+.main-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr 1fr;
+    gap: var(--spacing-lg);
+    align-items: start;
+}
+
+.left-column,
+.center-column,
+.right-column {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+/* ========================================
+   Card Base Styles
+   ======================================== */
+.card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    position: relative;
+    overflow: hidden;
+    transition: 
+        transform var(--transition-normal),
+        border-color var(--transition-normal),
+        box-shadow var(--transition-normal);
+    animation: fadeInUp 0.6s ease forwards;
+    opacity: 0;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    border-color: var(--border-hover);
+    box-shadow: var(--shadow-md);
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--gradient-triadic);
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+}
+
+.card:hover::before {
+    opacity: 1;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card:nth-child(1) { animation-delay: 0.1s; }
+.card:nth-child(2) { animation-delay: 0.2s; }
+.card:nth-child(3) { animation-delay: 0.3s; }
+
+.card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-md);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.title-icon {
+    font-size: 1.2rem;
+}
+
+/* ========================================
+   Profile Card
+   ======================================== */
+.profile-card {
+    animation-delay: 0s;
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.avatar-wrapper {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
+}
+
+.avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: var(--radius-lg);
+    object-fit: cover;
+    position: relative;
+    z-index: 2;
+}
+
+.avatar-glow {
+    position: absolute;
+    inset: -4px;
+    background: var(--gradient-triadic);
+    border-radius: var(--radius-lg);
+    opacity: 0.6;
+    filter: blur(8px);
+    z-index: 0;
+    animation: glowPulse 3s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+    0%, 100% { opacity: 0.4; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(1.05); }
+}
+
+.avatar-ring {
+    position: absolute;
+    inset: -2px;
+    border-radius: var(--radius-lg);
+    border: 2px solid transparent;
+    background: var(--gradient-triadic) border-box;
+    -webkit-mask: 
+        linear-gradient(#fff 0 0) padding-box, 
+        linear-gradient(#fff 0 0);
+    mask: 
+        linear-gradient(#fff 0 0) padding-box, 
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    z-index: 1;
+}
+
+.profile-info {
+    flex: 1;
+}
+
+.profile-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+    background: var(--gradient-triadic);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.profile-username {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.profile-bio {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+}
+
+/* ========================================
+   Status Card
+   ======================================== */
+.status-card {
+    animation-delay: 0.1s;
+}
+
+.status-content {
+    background: var(--bg-secondary);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    border-left: 3px solid var(--primary-cyan);
+}
+
+.status-label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--primary-cyan);
+    margin-bottom: var(--spacing-xs);
+}
+
+.status-description {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+/* ========================================
+   Journey Timeline Card
+   ======================================== */
+.journey-card {
+    animation-delay: 0.2s;
+}
+
+.timeline {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    position: relative;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: var(--border-primary);
+}
+
+.timeline-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-md);
+    position: relative;
+    padding-left: var(--spacing-xl);
+}
+
+.timeline-marker {
+    position: absolute;
+    left: 0;
+    top: 4px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--bg-card);
+    border: 2px solid var(--border-primary);
+    transition: all var(--transition-normal);
+}
+
+.timeline-item.active .timeline-marker {
+    background: var(--primary-magenta);
+    border-color: var(--primary-magenta);
+    box-shadow: 0 0 12px var(--magenta-glow);
+}
+
+.timeline-item:hover .timeline-marker {
+    border-color: var(--primary-cyan);
+    box-shadow: 0 0 8px var(--cyan-glow);
+}
+
+.timeline-content {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.timeline-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    background: var(--bg-secondary);
+    padding: 4px 10px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-primary);
+}
+
+.timeline-item.active .timeline-date {
+    background: rgba(255, 0, 128, 0.1);
+    border-color: var(--primary-magenta);
+    color: var(--primary-magenta);
+}
+
+.timeline-role {
+    font-size: 0.95rem;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+/* ========================================
+   Social Card
+   ======================================== */
+.social-card {
+    animation-delay: 0s;
+}
+
+.social-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: var(--spacing-sm);
+}
+
+.social-grid.secondary {
+    margin-top: 0;
+}
+
+.social-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border-primary), transparent);
+    margin: var(--spacing-md) 0;
+}
+
+.social-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: var(--spacing-sm);
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-md);
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: all var(--transition-normal);
+}
+
+.social-link i {
+    font-size: 1.2rem;
+    transition: transform var(--transition-normal);
+}
+
+.social-link span {
+    font-size: 0.7rem;
+    font-weight: 500;
+}
+
+.social-link:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--primary-cyan);
+    color: var(--primary-cyan);
+    transform: translateY(-2px);
+}
+
+.social-link:hover i {
+    transform: scale(1.1);
+}
+
+/* Different hover colors for variety */
+.social-link:nth-child(2):hover {
+    border-color: var(--primary-magenta);
+    color: var(--primary-magenta);
+}
+
+.social-link:nth-child(3):hover {
+    border-color: var(--primary-gold);
+    color: var(--primary-gold);
+}
+
+/* ========================================
+   Donation Card
+   ======================================== */
+.donation-card {
+    animation-delay: 0.1s;
+}
+
+.qr-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.qr-wrapper {
+    background: #ffffff;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-sm);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs);
+    transition: transform var(--transition-normal);
+}
+
+.qr-wrapper:hover {
+    transform: scale(1.02);
+}
+
+.qr-image {
+    width: 100%;
+    max-width: 140px;
+    height: auto;
+    border-radius: var(--radius-sm);
+}
+
+.qr-logo {
+    width: 100%;
+    text-align: center;
+    padding: 6px 0;
+}
+
+.bank-name {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #c00;
+    letter-spacing: 1px;
+}
+
+.bank-name.crypto {
+    color: #f0b90b;
+}
+
+.payment-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-sm);
+}
+
+.payment-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-md);
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all var(--transition-normal);
+}
+
+.payment-btn.paypal {
+    background: transparent;
+    border: 2px solid #0070ba;
+    color: #0070ba;
+}
+
+.payment-btn.paypal:hover {
+    background: #0070ba;
+    color: white;
+}
+
+.payment-btn.usdt {
+    background: var(--primary-cyan);
+    border: 2px solid var(--primary-cyan);
+    color: var(--bg-primary);
+}
+
+.payment-btn.usdt:hover {
+    background: transparent;
+    color: var(--primary-cyan);
+}
+
+/* ========================================
+   Skills Card
+   ======================================== */
+.skills-card {
+    animation-delay: 0.2s;
+}
+
+.skills-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+}
+
+.skill-tag {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-primary);
+    color: var(--text-secondary);
+    padding: 8px 16px;
+    border-radius: var(--radius-full);
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all var(--transition-normal);
+    cursor: default;
+}
+
+.skill-tag:hover {
+    border-color: var(--primary-cyan);
+    color: var(--primary-cyan);
+    background: rgba(0, 217, 255, 0.1);
+}
+
+.skill-tag:nth-child(2):hover {
+    border-color: var(--primary-magenta);
+    color: var(--primary-magenta);
+    background: rgba(255, 0, 128, 0.1);
+}
+
+.skill-tag:nth-child(3):hover {
+    border-color: var(--primary-gold);
+    color: var(--primary-gold);
+    background: rgba(255, 215, 0, 0.1);
+}
+
+/* ========================================
+   Product Cards
+   ======================================== */
+.products-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.product-card {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    background: var(--bg-card);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+    transition: all var(--transition-normal);
+    animation: fadeInRight 0.5s ease forwards;
+    opacity: 0;
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.product-card:nth-child(1) { animation-delay: 0.1s; }
+.product-card:nth-child(2) { animation-delay: 0.2s; }
+.product-card:nth-child(3) { animation-delay: 0.3s; }
+.product-card:nth-child(4) { animation-delay: 0.4s; }
+.product-card:nth-child(5) { animation-delay: 0.5s; }
+.product-card:nth-child(6) { animation-delay: 0.6s; }
+
+.product-card:hover {
+    border-color: var(--primary-cyan);
+    transform: translateX(-4px);
+    box-shadow: var(--shadow-glow-cyan);
+}
+
+.product-card:nth-child(2):hover {
+    border-color: var(--primary-magenta);
+    box-shadow: var(--shadow-glow-magenta);
+}
+
+.product-card:nth-child(3):hover {
+    border-color: var(--primary-gold);
+    box-shadow: 0 0 20px var(--gold-glow);
+}
+
+.product-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    flex-shrink: 0;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-primary);
+}
+
+.product-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.product-icon.youtube {
+    background: #ff0000;
+}
+
+.product-icon.rainbow {
+    border: 2px solid transparent;
+    background: 
+        linear-gradient(var(--bg-secondary), var(--bg-secondary)) padding-box,
+        var(--gradient-triadic) border-box;
+}
+
+.product-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.product-name {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.product-desc {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.product-btn {
+    padding: 8px 16px;
+    background: var(--primary-cyan);
+    color: var(--bg-primary);
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-radius: var(--radius-full);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: all var(--transition-normal);
+}
+
+.product-btn:hover {
+    background: var(--text-primary);
+    transform: scale(1.05);
+}
+
+/* ========================================
+   Responsive Design
+   ======================================== */
+@media (max-width: 1200px) {
+    .main-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .right-column {
+        grid-column: 1 / -1;
+    }
+    
+    .products-list {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+    .container {
+        padding: var(--spacing-md);
+    }
+    
+    .main-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .social-grid {
+        grid-template-columns: repeat(5, 1fr);
+    }
+    
+    .products-list {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    html {
+        font-size: 14px;
+    }
+    
+    .social-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .social-grid.secondary {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .qr-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .payment-buttons {
+        grid-template-columns: 1fr;
+    }
+    
+    .profile-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .profile-name {
+        font-size: 1.3rem;
+    }
+    
+    .timeline-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-xs);
+    }
+}
+
+/* ========================================
+   Scrollbar Styling
+   ======================================== */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-primary);
+    border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--border-hover);
+}
+
+/* ========================================
+   Selection Styling
+   ======================================== */
+::selection {
+    background: var(--primary-cyan);
+    color: var(--bg-primary);
+}
+
+/* ========================================
+   Focus States for Accessibility
+   ======================================== */
+a:focus-visible,
+button:focus-visible {
+    outline: 2px solid var(--primary-cyan);
+    outline-offset: 2px;
+}
